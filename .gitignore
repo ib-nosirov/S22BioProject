@@ -2,3 +2,5 @@
 .ipynb_checkpoints
 hctsa/
 *.swp
+*.txt
+*.mlx
