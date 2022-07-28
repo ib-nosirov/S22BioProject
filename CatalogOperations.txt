@@ -1,0 +1,35 @@
+NW_VisibilityGraph(x_z,'horiz')
+
+	Operations(Operations.ID==2095,:)
+	MasterOperations(MasterOperations.ID==785,:)
+
+NW_VisibilityGraph    Visibility graph analysis of a time series.
+
+  Constructs a visibility graph of the time series and returns various
+  statistics on the properties of the resulting network.
+
+  cf.: "From time series to complex networks: The visibility graph"
+  Lacasa, Lucas and Luque, Bartolo and Ballesteros, Fernando and Luque, Jordi
+  and Nuno, Juan Carlos P. Natl. Acad. Sci. USA. 105(13) 4972 (2008)
+
+  "Horizontal visibility graphs: Exact results for random time series"
+  Luque, B. and Lacasa, L. and Ballesteros, F. and Luque, J.
+  Phys. Rev. E. 80(4) 046103 (2009)
+
+ ---INPUTS:
+
+  y, the time series (a column vector)
+
+  meth, the method for constructing:
+  			(i) 'norm': the normal visibility definition
+  			(ii) 'horiz': uses only horizonatal lines to link nodes/datums
+
+  maxL, the maximum number of samples to consider. Due to memory constraints,
+                only the first maxL (6000 by default) points of time series are
+                analyzed. Longer time series are reduced to their first maxL
+                samples.
+
+ ---OUTPUTS:
+
+  Statistics on the degree distribution, including the mode, mean, spread,
+  histogram entropy, and fits to gaussian, exponential, and power-law distributions.

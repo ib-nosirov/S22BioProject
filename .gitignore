@@ -1,0 +1,4 @@
+*.mat
+.ipynb_checkpoints
+hctsa/
+*.swp

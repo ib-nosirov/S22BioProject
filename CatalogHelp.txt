@@ -1,0 +1,97 @@
+TS_TopFeatures  Top individual features for discriminating labeled time series
+
+  This function compares each feature in an hctsa dataset individually for its
+  ability to separate the labeled classes of time series according to a given
+  test statistic.
+
+  Can also compare this performance to a set of randomized null features to
+  evaluate the statistical significance of the result (pooled permutation testing).
+
+  Note that it can be more interpretable to run this function on filtered but
+  un-normalized data (e.g., from TS_Normalize('none')), so that feature values
+  correspond to raw feature outputs.
+
+ ---INPUTS:
+
+  whatData, the hctsa data to use (input to TS_LoadData, default: 'raw')
+  whatTestStat, the test statistic to quantify the goodness of each feature
+                (e.g., 'tstat','ustat'; or set 'classification' to use classifier
+                    described in cfnParams)
+  cfnParams, the classification settings if using 'classification'-based selection
+
+ ---OPTIONAL extra inputs:
+
+  'whatPlots', can specify what output plots to produce (cell of strings), e.g.,
+                specify {'histogram','distributions','cluster','datamatrix'} to
+                produce all four possible output plots (this is the default).
+  'numTopFeatures' [40], specifies the number of top features to analyze, both in
+                    terms of the list of outputs, the histogram plots, and the
+                    cluster plot.
+  'numFeaturesDistr' [16], sets a custom number of distributions to display (can
+                    set this lower to avoid producing large numbers of figures).
+  'numNulls' [0], the number of shuffled nulls to generate (e.g., 10 shuffles pools
+                shuffles for all M features, for a total of 10*M elements in the
+                null distribution)
+
+ ---EXAMPLE USAGE:
+
+  TS_TopFeatures('norm','tstat',struct(),'whatPlots',{'histogram','distributions',...
+            'cluster','datamatrix'},'numTopFeatures',40,'numFeaturesDistr',10);
+
+  TS_TopFeatures('norm','classification',cfnParams,'whatPlots',{'histogram','distributions',...
+            'cluster','datamatrix'},'numTopFeatures',40,'numFeaturesDistr',10);
+
+ ---OUTPUTS:
+
+  ifeat, the ordering of operations by their performance
+  testStat, the test statistic (whatTestStat) for each operation
+  testStat_rand, test statistics making up the null distributions
+  featureClassifier, the individual-feature classifier (if using single-feature
+                classification) 
+
+TS_Classify   Classify class labels assigned to the data using all features
+
+  Requires the time-series data to have been labeled using TS_LabelGroups, which
+  stores in the Group column of the TimeSeries table.
+
+ ---USAGE:
+  TS_Classify();
+
+ ---INPUTS:
+  whatData, the hctsa data to use (input to TS_LoadData)
+  cfnParams, parameters for the classification algorithm (cf. GiveMeDefaultClassificationParams)
+  numNulls (numeric), number of nulls to compute (0 for no null comparison)
+
+  (OPTIONAL):
+  doParallel [false], whether to speed up the null computation using a parfor loop
+  doPlot [true], whether to plot outputs (including confusion matrix)
+  seedReset, input to BF_ResetSeed, specifying whether (and how) to reset the
+                random seed (for reproducible results from cross-validation)
+
+TS_Normalize  Trims and normalizes data from an hctsa analysis.
+
+  Reads in data from HCTSA.mat, writes a trimmed, normalized version to HCTSA_N.mat
+  For many normalization settings, each feature is normalized to the unit interval
+  for the purposes of visualization and clustering.
+
+ ---INPUTS:
+  normFunction: String specifying how to normalize the data.
+
+  filterOptions: Vector specifying thresholds for the minimum proportion of good
+                 values required in a given row or column, in the form of a 2-vector:
+                 [row proportion, column proportion]. If one of the filterOptions
+                 is set to 1, will have no bad values in your matrix.
+
+  fileName_HCTSA: Custom hctsa data to import. Default: loaded from 'HCTSA.mat'.
+
+  classVarFilter: whether to filter on zero variance of any given class (which
+                  can cause problems for many classification algorithms).
+
+  keepCalcTime: whether to keep TS_CalcTime
+
+  "The first step in analyzing a dataset involves processing the data matrix,
+  which can be done using TS_Normalize. This involves filtering out operations or
+  time series that produced many errors or special-valued outputs, and then
+  normalizing of the output of all operations, which is typically done in-sample,
+  according to an outlier-robust sigmoidal transform (although other normalizing
+  transformations can be selected)" ~ Gitbook("Filtering and normalizing", p1).
