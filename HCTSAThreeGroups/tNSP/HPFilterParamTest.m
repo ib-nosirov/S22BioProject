@@ -44,3 +44,4 @@ function classAcc = HPFilterParamTest(timeSeriesData,keywords,pup,pdown,lag)
         end
     end
 end
+%    fn_handle = @(XTrain,yTrain,XTest,yTest) fn_loss(yTest,classify(XTest,XTrain,yTrain,'linear'));
