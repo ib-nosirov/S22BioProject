@@ -20,7 +20,7 @@ outputCell = cell(N,N,N,4);
 % sprintf('pdown: %4.2f',pdown(jj));
 % sprintf('lag: %4.2f',lag(kk));
 HPFilterParamTest(timeSeriesData,keywords,0.6,0.3,1)
-HPFilterParamTest(timeSeriesData,keywords,0.5,0.3,1)
+%HPFilterParamTest(timeSeriesData,keywords,0.5,0.3,1)
 
 
 % the best results: pup = 0.5,0.6, pdown = .3, lag = 1;

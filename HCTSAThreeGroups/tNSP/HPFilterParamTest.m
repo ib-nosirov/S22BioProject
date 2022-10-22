@@ -12,6 +12,8 @@ function classAcc = HPFilterParamTest(timeSeriesData,keywords,pup,pdown,lag)
          acf = autocorr(double(res));
          autoCorrData(ii) = acf(1+lag);
     end
+    % Takes in vectors
+    %autoCorrData = [autoCorrData, randn(length(autoCorrData),1)];
     % Same as TS_Compute up until this point.
     % step 2: run discriminant analysis in the feature space.
     groupLabels = categorical(reshape(keywords,[numOfTS,1]));

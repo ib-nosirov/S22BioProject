@@ -2,8 +2,8 @@ close all; clear all;
 load ThreeGroupClassifyT_NSP
 % one trial for one mouse was missing; remove that from each vector
 numOfTS = length(timeSeriesData);
-%dayNumbers = [dayNumbers(1:79); dayNumbers(81:176)];
-%trialNumbersEachDay = [trialNumbersEachDay(1:79); trialNumbersEachDay(81:176)];
+dayNumbers = [dayNumbers(1:79); dayNumbers(81:176)];
+trialNumbersEachDay = [trialNumbersEachDay(1:79); trialNumbersEachDay(81:176)];
 
 figure(1);
 count = 0;
