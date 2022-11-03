@@ -17,7 +17,10 @@ function classAcc = HPFilterParamTest(timeSeriesData,keywords,pup,pdown,lag)
     % Same as TS_Compute up until this point.
     % step 2: run discriminant analysis in the feature space.
     groupLabels = categorical(reshape(keywords,[numOfTS,1]));
-    fnLoss = @(yTest,yPredict) 100*mean(arrayfun(@(x) mean(yPredict(yTest==x)==yTest(yTest==x)),{'direct','random','serial'}));
-    fnTestStat = @(XTrain,yTrain,XTest,yTest) fnLoss(yTest,classify(XTest,XTrain,yTrain,'linear'));
+    fnLoss = @(yTest,yPredict) 100*mean(arrayfun(...
+            @(x) mean(yPredict(yTest==x)==yTest(yTest==x)),...
+            {'direct','random','serial'}));
+    fnTestStat = @(XTrain,yTrain,XTest,yTest)...
+                fnLoss(yTest,classify(XTest,XTrain,yTrain,'linear'));
     classAcc = fnTestStat(autoCorrData,groupLabels,autoCorrData,groupLabels);
 end
